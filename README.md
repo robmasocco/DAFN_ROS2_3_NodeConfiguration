@@ -1,6 +1,6 @@
 # DAFN_ROS2_3_NodeConfiguration
 
-DAFN - ROS 2 Lecture 1: Middleware Fundamentals.
+DAFN - ROS 2 Lecture 3: Node Configuration.
 
 LaTeX source code and build files.
 
