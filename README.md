@@ -1,5 +1,7 @@
-# UTV-Eng-beamer-template
+# DAFN_ROS2_3_NodeConfiguration
 
-Beamer presentation template for University of Rome "Tor Vergata", Engineering faculty.
+DAFN - ROS 2 Lecture 1: Middleware Fundamentals.
 
-Compatible with Overleaf, natively supports the [`LaTeX-env`](https://github.com/IntelligentSystemsLabUTV/LaTeX-env) offline LaTeX development environment, based on Docker and Visual Studio Code.
+LaTeX source code and build files.
+
+The document can be found in [`build/main.pdf`](build/main.pdf).
