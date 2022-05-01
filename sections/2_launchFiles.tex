@@ -4,4 +4,62 @@
 
 % ### Launch Files ###
 \section{Launch Files}
-\graphicspath{{figs/section2/}}
+
+% --- Scripting ROS 2 Architectures ---
+\begin{frame}{Scripting ROS 2 Architectures}
+A ROS 2-based control architecture for a robot can easily get to have 20 nodes or more.\\\vspace{10pt}
+It then becomes critical to be able to \textbg{automate startup and configuration} of all the modules, or some subsets, also for testing.\\\vspace{10pt}
+That is what the ROS 2 \textbg{Launch System} is for.
+\end{frame}
+
+% --- Launch Files ---
+\begin{frame}{Launch Files}
+\textbg{Launch files} are \textbg{Python scripts} that specify how ROS 2 modules must be \textbg{located}, \textbg{configured} and \textbg{started}. Their format is such that the Launch System can parse and integrate them when invoked.\\\vspace{10pt}
+Many things can be configured about modules in such files:
+\begin{itemize}
+  \item console and text files \textbg{logs};
+  \item command line \textbg{arguments};
+  \item node \textbg{parameters};
+  \item \textbg{remappings}.
+\end{itemize}
+\vspace{10pt}
+Targeted modules may even not be ROS 2 nodes.\\\vspace{10pt}
+Launch files may be \textbg{included}, so that large architectures can be started with single commands.
+\end{frame}
+\begin{frame}[fragile]{Launch Files}
+\begin{columns}\column{.9\textwidth}
+\begin{lstlisting}[language=Python, caption=Minimal example of a launch file]
+from launch import LaunchDescription
+from launch_ros.actions import Node
+
+# The following function MUST be specified
+
+"""Builds a launch description."""
+def generate_launch_description():
+  ld = LaunchDescription()
+  node = Node(
+    package='PACKAGE_NAME',
+    executable='EXECUTABLE_NAME'
+  )
+  ld.add_action(node)
+  return ld
+\end{lstlisting}
+\end{columns}
+\end{frame}
+
+% --- Coding Launch Files
+\begin{frame}{Coding Launch Files}
+\begin{block}{Launch Files Best Practices}
+  \begin{itemize}
+    \item Their extension is usually \texttt{.launch.py}.
+    \item They are usually placed in a directory named \texttt{launch} that is installed in the workspace path during build.
+    \item A module can have its own launch files but those for the entire architecture must form an appropriate package, whose name is usually \texttt{PROJECT\_bringup}.
+  \end{itemize}
+\end{block}
+A comprehensive description of all the features of launch files can be found in \href{https://github.com/IntelligentSystemsLabUTV/ros2-examples/blob/galactic/launch_files.md}{\color{blue}\underline{launch\_files.md}}.
+\end{frame}
+
+% --- Example: Bringup Package ---
+\begin{frame}{Example: Bringup Package}
+  Now go have a look at the \href{https://github.com/IntelligentSystemsLabUTV/ros2-examples/tree/galactic/src/ros2_examples_bringup}{\color{blue}\underline{ros2-examples/src/ros2\_examples\_bringup}} package!
+\end{frame}
