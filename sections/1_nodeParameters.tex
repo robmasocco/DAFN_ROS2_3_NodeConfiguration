@@ -4,4 +4,79 @@
 
 % ### Node Parameters ###
 \section{Node Parameters}
-\graphicspath{{figs/section1/}}
+
+% --- Why parameters? ---
+\begin{frame}{Why parameters?}
+\begin{exampleblock}{Example: The Camera Node}
+  Suppose you have to integrate an \textbf{RGB camera} into your architecture, by writing a ROS 2 node that acts as a \textbf{driver}:
+  \begin{itemize}
+    \item the node uses the necesary libraries to interact with the camera hardware;
+    \item RGB frames are constantly published on some topic;
+    \item during constant operation, you would like to \textbf{change some values} to tune image quality, e.g. exposure.
+  \end{itemize}
+\end{exampleblock}
+\end{frame}
+\begin{frame}{Why parameters?}
+\begin{exampleblock}{Example: The Controller Node}
+  Suppose you implemented some \textbf{discrete-time control law} in a ROS 2 node:
+  \begin{itemize}
+    \item subscribers constantly sample sensor measurements, and callbacks embed the control algorithm;
+    \item the control law depends on some \textbf{parameters};
+    \item you would like to change the parameters without having to \textbf{recompile} your software each time;
+    \item you would like to have \textbf{other modules} to change such parameters automatically if need be.
+  \end{itemize}
+\end{exampleblock}
+\end{frame}
+
+% --- Node Parameters ---
+\begin{frame}{Node Parameters}
+A ROS 2 node can have one or more \textbg{parameters}: values that can be specified at startup, changed at runtime, and used in the implementation.\\\vspace{10pt}
+The parameter system is \textbg{decentralized} and \textbg{built on messages and services}: each node has its own parameters and related service, and updates are \textbg{broadcasted} to every other node.\\\vspace{10pt}
+Parameters can be \textbg{listed}, \textbg{queried}, \textbg{described} and \textbg{set}, using either \textbg{CLI tools} or \textbg{service calls}; YAML configuration files may be \textbg{loaded} or \textbg{dumped}.\\\vspace{10pt}
+It is possible to specify what to do when a parameter update is requested by defining a \textbg{callback}.\\\vspace{10pt}
+A parameter may be \textbg{read-only} and its type may be \textbg{dynamic}\footnote{Only from Galactic.}.
+\end{frame}
+
+% --- Parameter Types ---
+\begin{frame}{Parameter Types}
+From the \texttt{rcl\_interfaces/msg/ParameterType} message file:
+\begin{itemize}
+  \item \texttt{bool}
+  \item \texttt{integer}
+  \item \texttt{double}
+  \item \texttt{string}
+  \item \texttt{byte array}
+  \item \texttt{bool array}
+  \item \texttt{integer array}
+  \item \texttt{double array}
+  \item \texttt{string array}
+\end{itemize}
+\end{frame}
+
+% --- Parameters CLI Commands ---
+\begin{frame}{Parameters CLI Commands}
+\begin{itemize}
+  \item \texttt{ros2 param list NODE\_NAME}\\Lists available parameters of a node.
+  \item \texttt{ros2 param describe NODE\_NAME PARAMETER\_NAME}\\Shows information about a parameter.
+  \item \texttt{ros2 param get NODE\_NAME PARAMETER\_NAME}\\Returns the value of a parameter.
+  \item \texttt{ros2 param set NODE\_NAME PARAMETER\_NAME VALUE}\\Sets a given value for a parameter.
+  \item \texttt{ros2 param dump NODE\_NAME}\\Dumps the current parameter configuration in a YAML file.
+  \item \texttt{ros2 param load NODE\_NAME PARAMETER\_FILE}\\Loads parameters from a YAML file.
+\end{itemize}
+\end{frame}
+
+% --- Coding with Parameters ---
+\begin{frame}{Coding with Parameters}
+\begin{block}{Parameters Best Practices}
+  \begin{itemize}
+    \item Parameters are referred to by their \textbf{name}.
+    \item Before being used, a parameter must be \textbf{declared} to the middleware: this is usually done in the constructor of a node.
+    \item Parameter values can be retrieved \textbf{atomically} by calling an API, but accessing the middleware's internals to do this might be \textbf{slow}: it is best to define \textbf{local variables} that track the value of each parameter by being updated each time the parameter is.
+  \end{itemize}
+\end{block}
+\end{frame}
+
+% --- Example: Parametric Publisher ---
+\begin{frame}{Example: Parametric Publisher}
+  Now go have a look at the \href{https://github.com/IntelligentSystemsLabUTV/ros2-examples/tree/galactic/src/parameters_example}{\color{blue}\underline{ros2-examples/src/parameters\_example}} package!
+\end{frame}
